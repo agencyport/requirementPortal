@@ -90,7 +90,7 @@ ul {
 	<div class="box">
 	  <div class="header">
 	  	<img alt="image" class="logo" src="<%=request.getContextPath()%>/resources/images/Accenture-red-arrow-logo.png"></img>
-      	<label class="navbar-brand">Welcome To Requirement Pack Tool!</label>
+      	<center><label class="navbar-brand">Welcome To Duck creek Requirement Pack!</label></center>
 	  </div>
 	  <div class="options">
 	  </div>

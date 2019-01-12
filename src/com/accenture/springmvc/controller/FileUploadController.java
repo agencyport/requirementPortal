@@ -19,6 +19,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.accenture.springmvc.cc.ApachePOIExcelRead;
+import com.accenture.springmvc.cc.DynDisplayTable;
 import com.accenture.springmvc.cc.LobDataInsert;
 import com.accenture.springmvc.cc.XMLWriterDOM;
 import com.accenture.springmvc.entity.DynDisplayColumnBean;
@@ -33,17 +34,20 @@ import com.accenture.springmvc.service.LobService;
 public class FileUploadController {
 	@Autowired
 	private LobService lobService;
+
 	/**
 	 * Upload single file using Spring Controller
-	 * @throws IOException 
+	 * 
+	 * @throws IOException
 	 */
 	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
-	public @ResponseBody ModelAndView uploadFileHandler(@RequestParam("file") MultipartFile fileUpload) throws IOException {
+	public @ResponseBody ModelAndView uploadFileHandler(@RequestParam("file") MultipartFile fileUpload)
+			throws IOException {
 		ModelAndView model = new ModelAndView("lobmenu");
 		String fileLocation;
-		
+
 		if (!fileUpload.isEmpty()) {
-			
+
 			byte[] bytes = fileUpload.getBytes();
 
 			// Creating the directory to store file
@@ -53,43 +57,33 @@ public class FileUploadController {
 				dir.mkdirs();
 
 			// Create the file on server
-			File serverFile = new File(dir.getAbsolutePath()
-					+ File.separator + fileUpload.getOriginalFilename());
-			BufferedOutputStream stream = new BufferedOutputStream(
-					new FileOutputStream(serverFile));
+			File serverFile = new File(dir.getAbsolutePath() + File.separator + fileUpload.getOriginalFilename());
+			BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 			stream.write(bytes);
-			stream.close();	     
-	        System.out.println("Path is :" +serverFile);
-	        List<String> list = ApachePOIExcelRead.readFile(serverFile);
-	        System.out.println("Size of the List :" +list.size());
-	        for(int i=0; i<list.size();i++){
-	        	System.out.println("Data :" +list.get(i));
-	        }	        
-	        LobData lobData = null;
-	    	for(String str:list){
-	    		System.out.println("STR Array :" +str);
-	    		lobData = new LobData();
-	    		lobData.setData(str);
-	    		lobData.setLobReferenceId(1);
-	    		lobService.saveLobData(lobData);
-	    	}
-	    	List<LobData> listData= lobService.getLobData(1);
-	    	List<DynDisplayColumnBean> dynDisplayDetails = new ArrayList<DynDisplayColumnBean>();
-	    	DynDisplayColumnBean dynDisplayColumnBean;	 
-	    	LobData lobdata;
-	    	for(int i=0;i<listData.size();i++){
-	    		lobdata = new LobData();
-	    		dynDisplayColumnBean = new DynDisplayColumnBean();
-	    		dynDisplayColumnBean.setDisplayId(((LobData)listData.get(i)).getDataId());
-	    		dynDisplayColumnBean.setDisplayData(((LobData)listData.get(i)).getData().split("%st"));
-	    		dynDisplayColumnBean.setLobId(((LobData)listData.get(i)).getLobReferenceId());
-	    		dynDisplayColumnBean.setTitle(((LobData)listData.get(0)).getData().split("%st"));
-	    		dynDisplayDetails.add(dynDisplayColumnBean);
-	    	}
-	    	System.out.println("Size of the dynamic details data :" +dynDisplayDetails.size());
+			stream.close();
+			System.out.println("Path is :" + serverFile);
+			List<String> list = ApachePOIExcelRead.readFile(serverFile);
+			System.out.println("Size of the List :" + list.size());
+			for (int i = 0; i < list.size(); i++) {
+				System.out.println("Data :" + list.get(i));
+			}
+			LobData lobData = null;
+			for (String str : list) {
+				System.out.println("STR Array :" + str);
+				lobData = new LobData();
+				lobData.setData(str);
+				lobData.setLobReferenceId(1);
+				lobService.saveLobData(lobData);
+			}
+			List<LobData> listData = lobService.getLobData(1);
+			List<DynDisplayColumnBean> dynDisplayDetails = new ArrayList<DynDisplayColumnBean>();
+			DynDisplayTable displayTable = new DynDisplayTable();
+			dynDisplayDetails = displayTable.displayColumnBean(listData);
+			System.out.println("Size of the dynamic details data :" + dynDisplayDetails.size());
+			model.addObject("workingDir", System.getProperty("user.dir"));
 			model.addObject("excelDataDetails", dynDisplayDetails);
-            
-		} 
+
+		}
 		return model;
 	}
 

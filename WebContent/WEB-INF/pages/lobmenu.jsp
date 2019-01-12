@@ -34,7 +34,7 @@
 }
 
 .vertical-nav{
-	width: 15%;
+	width: 25%;
 	border-right: 1px solid silver;
 }
 
@@ -94,6 +94,14 @@ ul {
 .login-table{
 	margin-top : 5%;
 }
+.tabcontent {
+  float: left;
+  padding: 0px 12px;
+  border: 1px solid #ccc;
+  width: 200%;
+  border-left: none;
+  height: 1600px;
+}
 </style>
 
 <style  type="text/css">
@@ -151,15 +159,11 @@ tr.tableRowEven,tr.even {
 </style>
 </head>
 <body>
-<!-- <div class="tab">
-  <button class="tablinks" onclick="openLob(event, 'FeatureList')" id="defaultOpen">Feature List</button>
-  <button class="tablinks" onclick="openLob(event, 'Domain')">Domain</button>
-  <button class="tablinks" onclick="openLob(event, 'BPFs')">BPFs</button>
-</div> -->
+
 <div class="box">
 	  <div class="header">
 	  	<img class="logo" src="images/Accenture-red-arrow-logo.png"></img>
-      	<label class="navbar-brand">Welcome To Duck creek Requirement Pack!</label>
+      	<center><label class="navbar-brand">Welcome To Duck creek Requirement Pack!</label></center>
 	  </div>
 	  <div class="options">
 	  </div>
@@ -186,16 +190,18 @@ tr.tableRowEven,tr.even {
 	</form>	 
 </fieldset>
 	<!--Contents here -->
-  
+ <form method="POST" action="updateDelete">		 
   <c:if test="${excelDataDetails != null}">  
     <display:table name="excelDataDetails" id="excelData" class="table" pagesize="25"
     cellpadding="4" cellspacing="0" style="width:100%" defaultsort="1" defaultorder="ascending" sort="list"
-    requestURI="">
+    requestURI="">     
     <display:column title="DataId" property="displayId" headerClass="topic" sortable="true" />
     <c:forEach items="${excelData.displayData}" var="innerList" varStatus="index">    	 
-  		 <display:column title="Column[${index.index}]" property="displayData[${index.index}]"  headerClass="topic" sortable="true"/>   		    		   
+  		 <display:column title="Column[${index.index}]" property="displayData[${index.index}]" headerClass="topic" sortable="true"/>		  	    		   
 	</c:forEach>
-	<display:column title="LobId" property="lobId"  headerClass="topic" sortable="true" />    
+	<display:column title="LobId" property="lobId" headerClass="topic" sortable="true"/>
+	 <display:column title="Delete"><input type="checkbox"  name="checkboxdelete" value ="${excelData.displayId}"/></display:column> 	
+	 <display:column title="Edit"><input type="radio"  name="checkboxedit" value="${excelData.displayId}" /></display:column>	
    </display:table>
   </c:if>
    <c:if test="${emptyList!=null}"> 
@@ -217,16 +223,31 @@ tr.tableRowEven,tr.even {
     </table>
   </c:if>
 <!-- Content ends here -->
+<input type="submit" name="update" value="Edit">
+    <input type="submit" name="delete" value="Delete">
+</form>	
+<form method="POST" action="viewPDF">		
+		<div align="right"><input type="submit" value="Export to PDF"> </div>
+	</form>	
 </div>
 <div id="Domain" class="tabcontent">
-  <h3>Domain</h3>  
+  <h3>Domain</h3> 
+  <img class="logo" src="${workingDir}\images\domain.png"></img>  	
+  	<form method="POST" action="viewImagePDF">		
+		<input type="submit" value="Export to PDF"> 
+	</form>	 
 </div>
 <div id="BPFs" class="tabcontent">
   <h3>BPFs</h3>  
+  <img class="logo" src="${workingDir}\images\Menuscript.png"></img>  
+  	<form method="POST" action="viewImagePDF">		
+		<input type="submit" value="Export to PDF"> 
+	</form>	
 </div>
 </div>
 </div>
 <script>
+
 function openLob(evt,lobNm) {
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("tabcontent");

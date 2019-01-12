@@ -26,8 +26,8 @@ public class Employee implements Serializable {
 	private String name;
 	@Column
 	private String email;
-	@Column
-	private int age;
+	@Column	
+	private String permission;   
 
 	public long getId() {
 		return id;
@@ -69,12 +69,12 @@ public class Employee implements Serializable {
 		this.email = email;
 	}
 
-	public int getAge() {
-		return age;
+	public String  getPermission() {
+		return permission;
 	}
 
-	public void setAge(int age) {
-		this.age = age;
+	public void setPermission(String  permission) {
+		this.permission = permission;
 	}
 
 }

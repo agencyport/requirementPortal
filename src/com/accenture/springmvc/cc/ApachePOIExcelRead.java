@@ -32,6 +32,9 @@ public class ApachePOIExcelRead {
                 Iterator<Cell> cellIterator = currentRow.iterator();
                 int i= 1;
                 String excelMessage = "";
+                if(currentRow.getLastCellNum() <0){
+                	break;
+                }
                 arr = new String[currentRow.getLastCellNum()];
                 while (cellIterator.hasNext()) {                	 
 

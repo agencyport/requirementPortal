@@ -5,6 +5,13 @@ public class DynDisplayColumnBean {
 	private long lobId;
 	private long displayId;
 	private String[] title;
+	private boolean editableCheckbox;
+	public boolean getEditableCheckbox() {
+		return editableCheckbox;
+	}
+	public void setEditableCheckbox(boolean editableCheckbox) {
+		this.editableCheckbox = editableCheckbox;
+	}
 	public String[] getDisplayData() {
 		return displayData;
 	}

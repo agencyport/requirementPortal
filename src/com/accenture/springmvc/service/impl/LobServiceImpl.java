@@ -43,5 +43,13 @@ public class LobServiceImpl implements LobService {
 	@Override
 	public List<Lob> getLobs() {		
 		 return lobDAO.getLobs();	
+	}
+
+
+
+	@Override
+	public void deleteLobData(List<Long> listDataId) {
+		lobDAO.deleteLobData(listDataId);
+		
 	}	
 }

@@ -88,7 +88,7 @@ ul {
 	<div class="box">
 	  <div class="header">
 	  	<img class="logo" src="images/Accenture-red-arrow-logo.png"></img>
-      	<label class="navbar-brand">Welcome To Duck creek Requirement Pack!</label>
+	  	<center><label class="navbar-brand">Welcome To Duck creek Requirement Pack!</label></center>      
 	  </div>
 	  <div class="options">
 	  </div>

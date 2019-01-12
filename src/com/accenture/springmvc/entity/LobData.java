@@ -2,6 +2,7 @@ package com.accenture.springmvc.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,6 +18,7 @@ public class LobData implements Serializable{
 	private long dataId;
 	    @JoinColumn(name = "lob_reference_id")
 	    private long  lobReferenceId;
+	    @Column(length = 555)
 	    private String data;
 		public long getDataId() {
 			return dataId;

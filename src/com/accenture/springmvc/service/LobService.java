@@ -10,4 +10,6 @@ public interface LobService {
 	public List<Lob> getLobs();
 	public void saveLobData(LobData lobData);
 	public List<LobData> getLobData(long lobData);	
+	public void deleteLobData(List<Long> listDataId);
+	
 }

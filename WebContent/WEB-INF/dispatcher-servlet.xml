@@ -11,37 +11,42 @@
 
 	<context:component-scan base-package="com.accenture.springmvc.controller" />
 
-	<context:property-placeholder location="classpath:database.properties" />
-	
+	<context:property-placeholder
+		location="classpath:database.properties,classpath:pdf-view.properties" />
+
 	<!-- <mvc:resources mapping="/resources/**" location="resources/" /> -->
-	
+
 	<mvc:annotation-driven />
 	<bean
-        class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" />
+		class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" />
 
-	<mvc:resources mapping="/resources/**" location="/resources/" />	
-	
-	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>  
-	
-	<bean id="dataSource111" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+
+	<bean id="dataSource111"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="${database.driver}" />
 		<property name="url" value="${database.url}" />
 		<property name="username" value="${database.user}" />
 		<property name="password" value="${database.password}" />
 	</bean>
-	
-	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-		
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+
 		<property name="dataSource" ref="dataSource111" />
-		
+
 		<property name="annotatedClasses">
 			<list>
 				<value>com.accenture.springmvc.entity.Employee</value>
-				<value>com.accenture.springmvc.entity.Lob</value>	
-				<value>com.accenture.springmvc.entity.LobData</value>					
+				<value>com.accenture.springmvc.entity.Lob</value>
+				<value>com.accenture.springmvc.entity.LobData</value>
+				<value>com.accenture.springmvc.entity.DynDisplayColumnBean</value>
 			</list>
-		</property>	 
-		
+		</property>
+
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
@@ -50,29 +55,38 @@
 			</props>
 		</property>
 	</bean>
-	
-	<tx:annotation-driven/> 
-	
-	
+
+	<tx:annotation-driven />
+
+
 	<bean id="lobValidator" class="com.accenture.springmvc.validator.LobValidator" />
-	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
-	
-	<bean id="persistenceExceptionTranslationPostProcessor" class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
-	
-	<bean id="jspViewResolver" 	class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="viewClass" 	value="org.springframework.web.servlet.view.JstlView" />
+
+	<bean id="persistenceExceptionTranslationPostProcessor"
+		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
+	<bean id="jspViewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
 		<property name="prefix" value="/WEB-INF/pages/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
-	
+	<bean id="PDFResolver"
+		class="org.springframework.web.servlet.view.ResourceBundleViewResolver">
+		<property name="order" value="1" />
+		<property name="basename" value="pdf-view" />
+	</bean>
 	<bean id="employeeDao" class="com.accenture.springmvc.dao.impl.EmployeeDAOImpl" />
-	
-	<bean id="employeeService" class="com.accenture.springmvc.service.impl.EmployeeServiceImpl" />
-	
+
+	<bean id="employeeService"
+		class="com.accenture.springmvc.service.impl.EmployeeServiceImpl" />
+
 	<bean id="lobDao" class="com.accenture.springmvc.dao.impl.LobDAOImpl" />
-	
+
 	<bean id="lobService" class="com.accenture.springmvc.service.impl.LobServiceImpl" />
 
 </beans>
