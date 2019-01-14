@@ -100,7 +100,6 @@ ul {
 			  <li class="item active">
 			    <a href="lob"><label class="navbar-brand">Line of Business Page</label></a><br /><br />
 				<a href="login"><label class="navbar-brand">Logout</label></a><br/>
-				<a href="test"><label class="navbar-brand">test</label></a>
 			  </li>			  
 			  			  
 			</ul>
