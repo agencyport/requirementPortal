@@ -4,7 +4,6 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,15 +14,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.accenture.springmvc.cc.ApachePOIExcelRead;
 import com.accenture.springmvc.cc.DynDisplayTable;
-import com.accenture.springmvc.cc.LobDataInsert;
-import com.accenture.springmvc.cc.XMLWriterDOM;
 import com.accenture.springmvc.entity.DynDisplayColumnBean;
-import com.accenture.springmvc.entity.ExcelData;
 import com.accenture.springmvc.entity.LobData;
 import com.accenture.springmvc.service.LobService;
 
@@ -44,8 +39,6 @@ public class FileUploadController {
 	public @ResponseBody ModelAndView uploadFileHandler(@RequestParam("file") MultipartFile fileUpload)
 			throws IOException {
 		ModelAndView model = new ModelAndView("lobmenu");
-		String fileLocation;
-
 		if (!fileUpload.isEmpty()) {
 
 			byte[] bytes = fileUpload.getBytes();
@@ -79,8 +72,7 @@ public class FileUploadController {
 			List<DynDisplayColumnBean> dynDisplayDetails = new ArrayList<DynDisplayColumnBean>();
 			DynDisplayTable displayTable = new DynDisplayTable();
 			dynDisplayDetails = displayTable.displayColumnBean(listData);
-			System.out.println("Size of the dynamic details data :" + dynDisplayDetails.size());
-			model.addObject("workingDir", System.getProperty("user.dir"));
+			System.out.println("Size of the dynamic details data :" + dynDisplayDetails.size());			
 			model.addObject("excelDataDetails", dynDisplayDetails);
 
 		}

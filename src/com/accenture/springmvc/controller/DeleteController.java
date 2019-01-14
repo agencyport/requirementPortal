@@ -41,7 +41,6 @@ public class DeleteController {
 		DynDisplayTable displayTable = new DynDisplayTable();
 		List<DynDisplayColumnBean> dynDisplayDetails = displayTable.displayColumnBean(listData);
 		System.out.println("Size of the dynamic details data :" + dynDisplayDetails.size());
-		model.addObject("workingDir", System.getProperty("user.dir"));
 		model.addObject("excelDataDetails", dynDisplayDetails);
 		return model;
 	}
@@ -69,7 +68,6 @@ public class DeleteController {
 		DynDisplayTable displayTable = new DynDisplayTable();
 		List<DynDisplayColumnBean> dynDisplayDetails = displayTable.displayColumnBean(listData);
 		System.out.println("Size of the dynamic details data :" + dynDisplayDetails.size());
-		model.addObject("workingDir", System.getProperty("user.dir"));
 		model.addObject("excelDataDetails", dynDisplayDetails);
 		return model;			
 	}
@@ -86,7 +84,6 @@ public class DeleteController {
 		DynDisplayTable displayTable = new DynDisplayTable();
 		List<DynDisplayColumnBean> dynDisplayDetails = displayTable.displayColumnBean(listData);
 		System.out.println("Size of the dynamic details data :" + dynDisplayDetails.size());
-		model.addObject("workingDir", System.getProperty("user.dir"));
 		model.addObject("excelDataDetails", dynDisplayDetails);
 		return model;
 	}

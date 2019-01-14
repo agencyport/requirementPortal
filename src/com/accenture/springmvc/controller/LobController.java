@@ -1,6 +1,5 @@
 package com.accenture.springmvc.controller;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +19,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.accenture.springmvc.cc.DynDisplayTable;
 import com.accenture.springmvc.entity.DynDisplayColumnBean;
-import com.accenture.springmvc.entity.ExcelData;
 import com.accenture.springmvc.entity.Lob;
 import com.accenture.springmvc.entity.LobData;
 import com.accenture.springmvc.service.LobService;
@@ -57,8 +55,7 @@ public class LobController {
 			DynDisplayTable displayTable = new DynDisplayTable();
 			List<DynDisplayColumnBean> dynDisplayDetails = displayTable.displayColumnBean(listData);
 			System.out.println("Size of the dynamic details data :" + dynDisplayDetails.size());
-			model.addAttribute("excelDataDetails", dynDisplayDetails);
-			model.addAttribute("workingDir", System.getProperty("user.dir"));
+			model.addAttribute("excelDataDetails", dynDisplayDetails);		
 			return "lobmenu";
 		}
 

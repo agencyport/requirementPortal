@@ -25,8 +25,6 @@ public class ExportPdfController {
     public ModelAndView viewImagePDF() throws Exception{
     	String workingDir = System.getProperty("user.dir");
     	String path = workingDir+"\\images\\domain.png";
-    	
-    	
         return new ModelAndView("pdfImageView", "path", path);
     }   
 }
