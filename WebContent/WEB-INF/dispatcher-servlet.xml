@@ -44,6 +44,9 @@
 				<value>com.accenture.springmvc.entity.Lob</value>
 				<value>com.accenture.springmvc.entity.LobData</value>
 				<value>com.accenture.springmvc.entity.DynDisplayColumnBean</value>
+				<value>com.accenture.springmvc.entity.RevisionHistoryEntity</value>
+				<value>com.accenture.springmvc.entity.FeatureListingEntity</value>	
+				<value>com.accenture.springmvc.entity.RuleDetailsEntity</value>							
 			</list>
 		</property>
 
@@ -88,5 +91,9 @@
 	<bean id="lobDao" class="com.accenture.springmvc.dao.impl.LobDAOImpl" />
 
 	<bean id="lobService" class="com.accenture.springmvc.service.impl.LobServiceImpl" />
+	
+	<bean id="featureListDao" class="com.accenture.springmvc.dao.impl.FeatureListDAOImpl" />
+
+	<bean id="featureListService" class="com.accenture.springmvc.service.impl.FeatureListServiceImpl" />
 
 </beans>

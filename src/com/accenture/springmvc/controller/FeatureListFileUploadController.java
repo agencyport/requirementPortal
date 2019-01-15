@@ -4,8 +4,6 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,19 +14,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.accenture.springmvc.cc.ApachePOIExcelRead;
-import com.accenture.springmvc.cc.DynDisplayTable;
-import com.accenture.springmvc.entity.DynDisplayColumnBean;
-import com.accenture.springmvc.entity.LobData;
+import com.accenture.springmvc.cc.FeatureListCLSExcelRead;
+import com.accenture.springmvc.service.FeatureListService;
 import com.accenture.springmvc.service.LobService;
 
 /**
  * Handles requests for the application file upload requests
  */
 @Controller
-public class FileUploadController {
+public class FeatureListFileUploadController {
 	@Autowired
 	private LobService lobService;
+	
+	@Autowired
+	private FeatureListService featureListService;
 
 	/**
 	 * Upload single file using Spring Controller
@@ -39,6 +38,8 @@ public class FileUploadController {
 	public @ResponseBody ModelAndView uploadFileHandler(@RequestParam("file") MultipartFile fileUpload)
 			throws IOException {
 		ModelAndView model = new ModelAndView("lobmenu");
+		
+		int lobId =1;
 		if (!fileUpload.isEmpty()) {
 
 			byte[] bytes = fileUpload.getBytes();
@@ -54,9 +55,11 @@ public class FileUploadController {
 			BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 			stream.write(bytes);
 			stream.close();
-			System.out.println("Path is :" + serverFile);
-			List<String> list = ApachePOIExcelRead.readFile(serverFile);
-			System.out.println("Size of the List :" + list.size());
+			System.out.println("Path is :" + serverFile);			
+			//List<String> list = 
+					
+					FeatureListCLSExcelRead.readFile(serverFile,lobId,featureListService);
+			/*System.out.println("Size of the List :" + list.size());
 			for (int i = 0; i < list.size(); i++) {
 				System.out.println("Data :" + list.get(i));
 			}
@@ -73,7 +76,7 @@ public class FileUploadController {
 			DynDisplayTable displayTable = new DynDisplayTable();
 			dynDisplayDetails = displayTable.displayColumnBean(listData);
 			System.out.println("Size of the dynamic details data :" + dynDisplayDetails.size());			
-			model.addObject("excelDataDetails", dynDisplayDetails);
+			model.addObject("excelDataDetails", dynDisplayDetails);*/
 
 		}
 		return model;

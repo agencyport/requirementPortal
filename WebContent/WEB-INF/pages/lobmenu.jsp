@@ -203,9 +203,31 @@ tr.tableRowEven, tr.even {
 					</li>
 
 				</ul>
+			</div>		
+			<div id="FeatureList" class="horizontal-nov">
+				<ul class="nav-container">
+
+					<li class="item active">
+						<button class="button" onclick="openLob(event, 'RuleDetails')"
+							id="defaultOpen">
+							<label class="navbar-brand">Rule Details</label>
+						</button>
+						<br />
+					<br />
+						<button class="button" onclick="openLob(event, 'RevisionHistory')">
+							<label class="navbar-brand">Revision History</label>
+						</button>
+						<br />
+					<br />
+						<button class="button" onclick="openLob(event, 'CoverageDetails')">
+							<label class="navbar-brand">Coverage Details</label>
+						</button>
+					</li>
+
+				</ul>
 			</div>
 
-			<div id="FeatureList" class="tabcontent">
+			<div id="RuleDetails" class="tabcontent">
 				<fieldset>
 					<legend>Upload the File</legend>
 					<form method="POST" action="uploadFile"
@@ -266,6 +288,65 @@ tr.tableRowEven, tr.even {
 					</div>
 				</form>
 			</div>
+			<div id="RevisionHistory" class="tabcontent">
+				<fieldset>
+					<legend>Upload the File</legend>
+					<form method="POST" action="uploadRevisionHistory"
+						enctype="multipart/form-data">
+						File to upload: <input type="file" name="file"> <input
+							type="submit" value="UploadRevisionHistory">
+					</form>
+				</fieldset>
+				<!--Contents here -->
+				<form method="POST" action="updateDelete">
+					<c:if test="${excelDataDetails != null}">
+						<display:table name="excelDataDetails" id="excelData"
+							class="table" pagesize="25" cellpadding="4" cellspacing="0"
+							style="width:100%" defaultsort="1" defaultorder="ascending"
+							sort="list" requestURI="">
+							<display:column title="DataId" property="displayId"
+								headerClass="topic" sortable="true" />
+							<c:forEach items="${excelData.displayData}" var="innerList"
+								varStatus="index">
+								<display:column title="Column[${index.index}]"
+									property="displayData[${index.index}]" headerClass="topic"
+									sortable="true" />
+							</c:forEach>
+							<display:column title="LobId" property="lobId"
+								headerClass="topic" sortable="true" />
+							<display:column title="Delete">
+								<input type="checkbox" name="checkboxdelete"
+									value="${excelData.displayId}" />
+							</display:column>
+							<display:column title="Edit">
+								<input type="radio" name="checkboxedit"
+									value="${excelData.displayId}" />
+							</display:column>
+						</display:table>
+					</c:if>
+					<c:if test="${emptyList!=null}">
+						<table width="99%" align="center" border="1" cellspacing="0"
+							bordercolor="#6c7fa6" style="border-collapse: collapse"
+							class="table">
+							<tr class="topic">
+								<th width="15%">DataId</th>
+								<th width="15%">Column</th>
+								<th width="15%">lobId</th>
+							</tr>
+							<tr class="content_even">
+								<td align="center" colspan="4"><c:out value="${emptyList}" />
+								</td>
+							</tr>
+						</table>
+					</c:if>
+			</div>
+			<div id="CoverageDetails" class="tabcontent">
+				<h3>CoverageDetails</h3>
+				<img alt="image" class="logo" src="<%=request.getContextPath()%>/resources/images/Accenture-red-arrow-logo.png"></img>
+				<form method="POST" action="viewImagePDF">
+					<input type="submit" value="Export to PDF">
+				</form>
+			</div>
 			<div id="Domain" class="tabcontent">
 				<h3>Domain</h3>
 				<img alt="image" class="logo" src="<%=request.getContextPath()%>/resources/images/domain.png"></img>
@@ -275,7 +356,7 @@ tr.tableRowEven, tr.even {
 			</div>
 			<div id="BPFs" class="tabcontent">
 				<h3>BPFs</h3>
-				<img alt="image" class="logo" src="<%=request.getContextPath()%>/resources/images/Menuscript.png"></img>				
+				<img alt="image" class="logo" src="<%=request.getContextPath()%>/resources/images/Menuscript.png"></img>
 				<form method="POST" action="viewImagePDF">
 					<input type="submit" value="Export to PDF">
 				</form>
