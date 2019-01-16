@@ -232,6 +232,7 @@ tr.tableRowEven, tr.even {
 					<legend>Upload the File</legend>
 					<form method="POST" action="uploadFile"
 						enctype="multipart/form-data">
+						<input type="hidden" name="lobId" value="${lobId}"/>
 						File to upload: <input type="file" name="file"> <input
 							type="submit" value="Upload">
 					</form>

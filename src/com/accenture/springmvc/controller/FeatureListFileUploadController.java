@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,11 +36,10 @@ public class FeatureListFileUploadController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
-	public @ResponseBody ModelAndView uploadFileHandler(@RequestParam("file") MultipartFile fileUpload)
+	public @ResponseBody ModelAndView uploadFileHandler(@ModelAttribute("lobId")int lobId,@RequestParam("file") MultipartFile fileUpload)
 			throws IOException {
 		ModelAndView model = new ModelAndView("lobmenu");
 		
-		int lobId =1;
 		if (!fileUpload.isEmpty()) {
 
 			byte[] bytes = fileUpload.getBytes();

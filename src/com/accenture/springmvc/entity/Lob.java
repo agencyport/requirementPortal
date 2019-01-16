@@ -10,20 +10,21 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "lob")
+@Table(name = "Lob")
 public class Lob implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long lobId;
+	private int lobId;
 	@Column
 	public String lobName;
+	
 
-	public long getId() {
+	public int getLobId() {
 		return lobId;
 	}
 
-	public void setId(long id) {
-		this.lobId = id;
+	public void setLobId(int lobId) {
+		this.lobId = lobId;
 	}
 
 	public String getLobName() {

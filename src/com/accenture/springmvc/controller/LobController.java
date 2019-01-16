@@ -55,7 +55,8 @@ public class LobController {
 			DynDisplayTable displayTable = new DynDisplayTable();
 			List<DynDisplayColumnBean> dynDisplayDetails = displayTable.displayColumnBean(listData);
 			System.out.println("Size of the dynamic details data :" + dynDisplayDetails.size());
-			model.addAttribute("excelDataDetails", dynDisplayDetails);		
+			model.addAttribute("excelDataDetails", dynDisplayDetails);	
+			model.addAttribute("lobId",1);
 			return "lobmenu";
 		}
 
@@ -80,7 +81,7 @@ public class LobController {
 		List<String> lobs = new ArrayList<>();
 		for (Lob lob : lobList) {
 			lobs.add(lob.getLobName());
-		}
+		}		
 		model.addAttribute("lobs", lobs);
 	}
 
