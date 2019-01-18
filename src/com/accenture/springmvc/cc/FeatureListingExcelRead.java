@@ -10,13 +10,15 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 
 import com.accenture.springmvc.entity.FeatureListingEntity;
+import com.accenture.springmvc.entity.RevisionHistoryEntity;
 import com.accenture.springmvc.service.FeatureListService;
 
 public class FeatureListingExcelRead {
 
-	public void readSaveFeatureList(Sheet datatypeSheet, int lobId, FeatureListService featureListService) {
+	public List<FeatureListingEntity> readSaveFeatureList(Sheet datatypeSheet, int lobId, FeatureListService featureListService) {
 		List<FeatureListingEntity> listFeatureListing = readFeatureList(datatypeSheet, lobId);
 		saveFeatureListing(listFeatureListing, featureListService);
+		return getFeatureListing(lobId, featureListService);
 	}
 
 	private List<FeatureListingEntity> readFeatureList(Sheet datatypeSheet, int lobId) {
@@ -70,7 +72,7 @@ public class FeatureListingExcelRead {
 							} else if (currentCell.getColumnIndex() == startingIndex + 10) {
 								featureList.setEndorse(currentCell.getStringCellValue());
 							} else if (currentCell.getColumnIndex() == startingIndex + 11) {
-								featureList.setReneww(currentCell.getStringCellValue());
+								featureList.setRenew(currentCell.getStringCellValue());
 							} else if (currentCell.getColumnIndex() == startingIndex + 12) {
 								featureList.setCancel(currentCell.getStringCellValue());
 							} else if (currentCell.getColumnIndex() == startingIndex + 13) {
@@ -98,6 +100,9 @@ public class FeatureListingExcelRead {
 		for (FeatureListingEntity fL : listFeatureListing) {
 			featureListService.saveFeatureListing(fL);
 		}
+	}
+	private List<FeatureListingEntity> getFeatureListing(int lobId,FeatureListService featureListService) {
+		return featureListService.getFeatureListing(lobId);
 	}
 
 }

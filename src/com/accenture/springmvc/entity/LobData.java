@@ -15,22 +15,22 @@ import javax.persistence.Table;
 public class LobData implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long dataId;
+	private int dataId;
 	    @JoinColumn(name = "lob_reference_id")
-	    private long  lobReferenceId;
+	    private int  lobReferenceId;
 	    @Column(length = 555)
 	    private String data;
-		public long getDataId() {
+		public int getDataId() {
 			return dataId;
 		}
-		public void setDataId(long dataId) {
+		public void setDataId(int dataId) {
 			this.dataId = dataId;
 		}
 		
-		public long getLobReferenceId() {
+		public int getLobReferenceId() {
 			return lobReferenceId;
 		}
-		public void setLobReferenceId(long lobReferenceId) {
+		public void setLobReferenceId(int lobReferenceId) {
 			this.lobReferenceId = lobReferenceId;
 		}
 		public String getData() {

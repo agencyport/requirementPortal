@@ -12,36 +12,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.accenture.springmvc.cc.DynDisplayTable;
+import com.accenture.springmvc.cc.FeatureListingDisplay;
 import com.accenture.springmvc.entity.DynDisplayColumnBean;
-import com.accenture.springmvc.entity.LobData;
-import com.accenture.springmvc.service.LobService;
+import com.accenture.springmvc.entity.RuleDetailsEntity;
+import com.accenture.springmvc.service.FeatureListService;
 
 @Controller
-public class DeleteController {
+public class DeleteController {	
 	@Autowired
-	private LobService lobService;
+	private FeatureListService featureListService;
+	FeatureListingDisplay featureDisplay = new FeatureListingDisplay();
 
 	@RequestMapping(value = "update", method = RequestMethod.POST)
 	public ModelAndView update(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView model = new ModelAndView("lobmenu");
-		LobData lobData = new LobData();
-		StringBuffer data = new StringBuffer();
-		data.append(request.getParameter("category") + "%st" + request.getParameter("coverage") + "%st"
-				+ request.getParameter("desc"));
-		if (request.getParameter("displayId") != null) {
-			lobData.setDataId(Long.parseLong(request.getParameter("displayId")));
+		RuleDetailsEntity ruleDetails = new RuleDetailsEntity();
+		if (request.getParameter("displayId") != null && request.getParameter("lobId") != null) {
+		ruleDetails.setRuleId(Integer.parseInt(request.getParameter("displayId")));		
+		ruleDetails.setLobId(Integer.parseInt(request.getParameter("lobId")));
+		ruleDetails.setCategory(request.getParameter("category") );
+		ruleDetails.setCoverageAppl(request.getParameter("coverage"));
+		ruleDetails.setRuleDesc(request.getParameter("desc"));
 		}
-		if (request.getParameter("lobId") != null) {
-			lobData.setLobReferenceId(Long.parseLong(request.getParameter("lobId")));
-		}
-		lobData.setData(data.toString());
-		lobService.saveLobData(lobData);
-		List<LobData> listData = lobService.getLobData(1);
-		DynDisplayTable displayTable = new DynDisplayTable();
-		List<DynDisplayColumnBean> dynDisplayDetails = displayTable.displayColumnBean(listData);
-		System.out.println("Size of the dynamic details data :" + dynDisplayDetails.size());
-		model.addObject("excelDataDetails", dynDisplayDetails);
+		featureListService.saveRuleDetails(ruleDetails);
+		featureDisplay.setRulesDetailsModel(1, featureListService, model);	
 		return model;
 	}
 	
@@ -64,44 +58,32 @@ public class DeleteController {
 	@RequestMapping(value = "lobMenu", method = RequestMethod.POST)
 	public ModelAndView lobMenu(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView model = new ModelAndView("lobmenu");
-		List<LobData> listData = lobService.getLobData(1);
-		DynDisplayTable displayTable = new DynDisplayTable();
-		List<DynDisplayColumnBean> dynDisplayDetails = displayTable.displayColumnBean(listData);
-		System.out.println("Size of the dynamic details data :" + dynDisplayDetails.size());
-		model.addObject("excelDataDetails", dynDisplayDetails);
+		featureDisplay.setRulesDetailsModel(1, featureListService, model);		
 		return model;			
 	}
 
 	private ModelAndView delete(String[] selectedId,ModelAndView model) {		
 		if (selectedId!=null && selectedId.length > 0) {
-			List<Long> listDataId = new ArrayList<>();
+			List<Integer> listRulesId = new ArrayList<>();
 			for (int i = 0; i < selectedId.length; i++) {
-				listDataId.add(Long.parseLong(selectedId[i]));
-			}
-			lobService.deleteLobData(listDataId);
+				listRulesId.add(Integer.parseInt(selectedId[i]));
+			}			
+			featureListService.deleteRuleDetails(listRulesId);
 		}
-		List<LobData> listData = lobService.getLobData(1);
-		DynDisplayTable displayTable = new DynDisplayTable();
-		List<DynDisplayColumnBean> dynDisplayDetails = displayTable.displayColumnBean(listData);
-		System.out.println("Size of the dynamic details data :" + dynDisplayDetails.size());
-		model.addObject("excelDataDetails", dynDisplayDetails);
+		featureDisplay.setRulesDetailsModel(1, featureListService,model);	
 		return model;
 	}
 	private ModelAndView update(String[] selectedId,ModelAndView model) {		
 		if (selectedId != null && selectedId.length > 0) {
 			DynDisplayColumnBean dynDisplayColumnBean = new DynDisplayColumnBean();
-			LobData data = new LobData();
-			List<LobData> listData = lobService.getLobData(1);
-			for (LobData lobData : listData) {
-				if (String.valueOf(lobData.getDataId()).equals(selectedId[0])) {
-					data = lobData;
-					break;
-				}
-			}		
-		dynDisplayColumnBean.setDisplayId(data.getDataId());
-		dynDisplayColumnBean.setDisplayData(data.getData().split("%st"));
-		dynDisplayColumnBean.setLobId(data.getLobReferenceId());
-		dynDisplayColumnBean.setTitle(data.getData().split("%st"));
+			
+			RuleDetailsEntity ruleDetails =	featureListService.getRulesDetailsByRulesId(Integer.parseInt(selectedId[0]));
+			String displayData[] ={ruleDetails.getCategory(),ruleDetails.getCoverageAppl(),ruleDetails.getRuleDesc()};
+					
+		dynDisplayColumnBean.setDisplayId(ruleDetails.getRuleId());
+		dynDisplayColumnBean.setDisplayData(displayData);
+		dynDisplayColumnBean.setLobId(ruleDetails.getLobId());
+		dynDisplayColumnBean.setTitle(displayData);
 		model.addObject("dynDisplayColumnBean", dynDisplayColumnBean);
 		}
 		return model;

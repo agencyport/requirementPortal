@@ -17,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.accenture.springmvc.cc.FeatureListCLSExcelRead;
 import com.accenture.springmvc.service.FeatureListService;
-import com.accenture.springmvc.service.LobService;
 
 /**
  * Handles requests for the application file upload requests
@@ -25,11 +24,7 @@ import com.accenture.springmvc.service.LobService;
 @Controller
 public class FeatureListFileUploadController {
 	@Autowired
-	private LobService lobService;
-	
-	@Autowired
-	private FeatureListService featureListService;
-
+	private FeatureListService featureListService;	
 	/**
 	 * Upload single file using Spring Controller
 	 * 
@@ -38,46 +33,21 @@ public class FeatureListFileUploadController {
 	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
 	public @ResponseBody ModelAndView uploadFileHandler(@ModelAttribute("lobId")int lobId,@RequestParam("file") MultipartFile fileUpload)
 			throws IOException {
-		ModelAndView model = new ModelAndView("lobmenu");
-		
+		ModelAndView model = new ModelAndView("lobmenu");		
 		if (!fileUpload.isEmpty()) {
-
 			byte[] bytes = fileUpload.getBytes();
-
 			// Creating the directory to store file
 			String rootPath = System.getProperty("/");
 			File dir = new File(rootPath + File.separator + "resource");
 			if (!dir.exists())
 				dir.mkdirs();
-
 			// Create the file on server
 			File serverFile = new File(dir.getAbsolutePath() + File.separator + fileUpload.getOriginalFilename());
 			BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 			stream.write(bytes);
 			stream.close();
 			System.out.println("Path is :" + serverFile);			
-			//List<String> list = 
-					
-					FeatureListCLSExcelRead.readFile(serverFile,lobId,featureListService);
-			/*System.out.println("Size of the List :" + list.size());
-			for (int i = 0; i < list.size(); i++) {
-				System.out.println("Data :" + list.get(i));
-			}
-			LobData lobData = null;
-			for (String str : list) {
-				System.out.println("STR Array :" + str);
-				lobData = new LobData();
-				lobData.setData(str);
-				lobData.setLobReferenceId(1);
-				lobService.saveLobData(lobData);
-			}
-			List<LobData> listData = lobService.getLobData(1);
-			List<DynDisplayColumnBean> dynDisplayDetails = new ArrayList<DynDisplayColumnBean>();
-			DynDisplayTable displayTable = new DynDisplayTable();
-			dynDisplayDetails = displayTable.displayColumnBean(listData);
-			System.out.println("Size of the dynamic details data :" + dynDisplayDetails.size());			
-			model.addObject("excelDataDetails", dynDisplayDetails);*/
-
+			model = FeatureListCLSExcelRead.readFile(serverFile,lobId,featureListService,model);
 		}
 		return model;
 	}

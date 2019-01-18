@@ -2,16 +2,10 @@ package com.accenture.springmvc.entity;
 
 public class DynDisplayColumnBean {
 	private String[] displayData;
-	private long lobId;
-	private long displayId;
+	private int lobId;
+	private int displayId;
 	private String[] title;
-	private boolean editableCheckbox;
-	public boolean getEditableCheckbox() {
-		return editableCheckbox;
-	}
-	public void setEditableCheckbox(boolean editableCheckbox) {
-		this.editableCheckbox = editableCheckbox;
-	}
+	
 	public String[] getDisplayData() {
 		return displayData;
 	}
@@ -21,13 +15,13 @@ public class DynDisplayColumnBean {
 	public long getLobId() {
 		return lobId;
 	}
-	public void setLobId(long lobId) {
+	public void setLobId(int lobId) {
 		this.lobId = lobId;
 	}
 	public long getDisplayId() {
 		return displayId;
 	}
-	public void setDisplayId(long displayId) {
+	public void setDisplayId(int displayId) {
 		this.displayId = displayId;
 	}
 	public String[] getTitle() {

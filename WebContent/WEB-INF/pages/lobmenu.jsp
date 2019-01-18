@@ -239,16 +239,16 @@ tr.tableRowEven, tr.even {
 				</fieldset>
 				<!--Contents here -->
 				<form method="POST" action="updateDelete">
-					<c:if test="${excelDataDetails != null}">
-						<display:table name="excelDataDetails" id="excelData"
+					<c:if test="${ruleDetailsData != null}">
+						<display:table name="ruleDetailsData" id="ruleDetails"
 							class="table" pagesize="25" cellpadding="4" cellspacing="0"
 							style="width:100%" defaultsort="1" defaultorder="ascending"
 							sort="list" requestURI="">
 							<display:column title="DataId" property="displayId"
 								headerClass="topic" sortable="true" />
-							<c:forEach items="${excelData.displayData}" var="innerList"
+							<c:forEach items="${ruleDetails.displayData}" var="innerList"
 								varStatus="index">
-								<display:column title="Column[${index.index}]"
+								<display:column title="${ruleDetails.title[index.index]}"
 									property="displayData[${index.index}]" headerClass="topic"
 									sortable="true" />
 							</c:forEach>
@@ -256,11 +256,11 @@ tr.tableRowEven, tr.even {
 								headerClass="topic" sortable="true" />
 							<display:column title="Delete">
 								<input type="checkbox" name="checkboxdelete"
-									value="${excelData.displayId}" />
+									value="${ruleDetails.displayId}" />
 							</display:column>
 							<display:column title="Edit">
 								<input type="radio" name="checkboxedit"
-									value="${excelData.displayId}" />
+									value="${ruleDetails.displayId}" />
 							</display:column>
 						</display:table>
 					</c:if>
@@ -299,47 +299,7 @@ tr.tableRowEven, tr.even {
 					</form>
 				</fieldset>
 				<!--Contents here -->
-				<form method="POST" action="updateDelete">
-					<c:if test="${excelDataDetails != null}">
-						<display:table name="excelDataDetails" id="excelData"
-							class="table" pagesize="25" cellpadding="4" cellspacing="0"
-							style="width:100%" defaultsort="1" defaultorder="ascending"
-							sort="list" requestURI="">
-							<display:column title="DataId" property="displayId"
-								headerClass="topic" sortable="true" />
-							<c:forEach items="${excelData.displayData}" var="innerList"
-								varStatus="index">
-								<display:column title="Column[${index.index}]"
-									property="displayData[${index.index}]" headerClass="topic"
-									sortable="true" />
-							</c:forEach>
-							<display:column title="LobId" property="lobId"
-								headerClass="topic" sortable="true" />
-							<display:column title="Delete">
-								<input type="checkbox" name="checkboxdelete"
-									value="${excelData.displayId}" />
-							</display:column>
-							<display:column title="Edit">
-								<input type="radio" name="checkboxedit"
-									value="${excelData.displayId}" />
-							</display:column>
-						</display:table>
-					</c:if>
-					<c:if test="${emptyList!=null}">
-						<table width="99%" align="center" border="1" cellspacing="0"
-							bordercolor="#6c7fa6" style="border-collapse: collapse"
-							class="table">
-							<tr class="topic">
-								<th width="15%">DataId</th>
-								<th width="15%">Column</th>
-								<th width="15%">lobId</th>
-							</tr>
-							<tr class="content_even">
-								<td align="center" colspan="4"><c:out value="${emptyList}" />
-								</td>
-							</tr>
-						</table>
-					</c:if>
+				
 			</div>
 			<div id="CoverageDetails" class="tabcontent">
 				<h3>CoverageDetails</h3>

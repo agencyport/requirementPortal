@@ -2,22 +2,18 @@ package com.accenture.springmvc.cc;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.accenture.springmvc.service.FeatureListService;
 
 public class FeatureListCLSExcelRead {
 
-	public static void readFile(File file,int lobId,FeatureListService featureListService) {
+	public static ModelAndView readFile(File file,int lobId,FeatureListService featureListService,ModelAndView model) {
+		FeatureListingDisplay feature = new FeatureListingDisplay();
 		try {
 			FileInputStream excelFile = new FileInputStream(file);
 			Workbook workbook = new XSSFWorkbook(excelFile);
@@ -28,25 +24,28 @@ public class FeatureListCLSExcelRead {
 				switch (workbook.getSheetName(i)) {
 				case "Revision History":
 					RevisionHistoryExcelRead rvRead = new RevisionHistoryExcelRead();
-					rvRead.readSaveRevisionHistory(datatypeSheet,lobId,featureListService);
+				   rvRead.readSaveRevisionHistory(datatypeSheet,lobId,featureListService);
+					feature.setRevisionHistory(lobId, featureListService, model);
 					break;
 				case "WC Feature Listing":
 					FeatureListingExcelRead featureRead = new FeatureListingExcelRead();
 					featureRead.readSaveFeatureList(datatypeSheet,lobId,featureListService);
+					feature.setFeatureListing(lobId, featureListService, model);
 					break;
 				case "Coverage Details":
 
 					break;
 				case "Rules Details":
 					RuleDetailsExcelRead rdRead = new RuleDetailsExcelRead();
-					rdRead.readSaveRuleDetails(datatypeSheet,lobId,featureListService);
+					 rdRead.readSaveRuleDetails(datatypeSheet,lobId,featureListService);
+					feature.setRulesDetailsModel(lobId, featureListService, model);
 					break;
 				}
 			}
-			workbook.close();
+			workbook.close();		
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		}		
+		return model;
 	}
-
 }

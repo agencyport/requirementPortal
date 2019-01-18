@@ -6,7 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.accenture.springmvc.entity.LobData;
+import com.accenture.springmvc.entity.RuleDetailsEntity;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfWriter;
@@ -22,20 +22,24 @@ public class PDFView extends NetJSAbstractViewPDF {
     protected void buildPdfDocument(Map<String, Object> model, Document document, 
       PdfWriter writer, HttpServletRequest request, HttpServletResponse response) throws Exception {
         // List of users that will be displayed in the PDF
-        List<LobData> lobDatas = (List<LobData>)model.get("excelData");
+    	List<RuleDetailsEntity> listRuleDetails = (List<RuleDetailsEntity>)model.get("ruleDetailsData");
         // Create table with 3 columns of similar length
-        Table table = new Table(new float[]{4, 4, 4});
+        Table table = new Table(new float[]{4, 4, 4, 4, 4});
         table.setWidth(UnitValue.createPercentValue(100));
         PdfFont bold = PdfFontFactory.createFont("Times-Bold");
         // adding header
-        table.addHeaderCell(new Cell().add(new Paragraph("dataId").setFont(bold)));
-        table.addHeaderCell(new Cell().add(new Paragraph("data").setFont(bold)));
-        table.addHeaderCell(new Cell().add(new Paragraph("lobReferenceId").setFont(bold)));
+        table.addHeaderCell(new Cell().add(new Paragraph("ruleId").setFont(bold)));
+        table.addHeaderCell(new Cell().add(new Paragraph("Category").setFont(bold)));
+        table.addHeaderCell(new Cell().add(new Paragraph("Coverage").setFont(bold)));
+        table.addHeaderCell(new Cell().add(new Paragraph("Rule Desc").setFont(bold)));
+        table.addHeaderCell(new Cell().add(new Paragraph("Lob Id").setFont(bold)));
         // adding rows
-        for(LobData data : lobDatas) {
-            table.addCell(String.valueOf(data.getDataId()));
-            table.addCell(data.getData());
-            table.addCell(String.valueOf(data.getLobReferenceId()));
+        for(RuleDetailsEntity ruleDetails : listRuleDetails) {
+            table.addCell(String.valueOf(ruleDetails.getRuleId()));
+            table.addCell(ruleDetails.getCategory());
+            table.addCell(ruleDetails.getCoverageAppl());
+            table.addCell(ruleDetails.getRuleDesc());
+            table.addCell(String.valueOf(ruleDetails.getLobId()));
         }
         
         document.add(table);

@@ -18,15 +18,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.accenture.springmvc.cc.DynDisplayTable;
+import com.accenture.springmvc.cc.FeatureListingDisplay;
 import com.accenture.springmvc.entity.DynDisplayColumnBean;
 import com.accenture.springmvc.entity.Lob;
 import com.accenture.springmvc.entity.LobData;
+import com.accenture.springmvc.entity.RuleDetailsEntity;
+import com.accenture.springmvc.service.FeatureListService;
 import com.accenture.springmvc.service.LobService;
 
 @Controller
 public class LobController {
 	@Autowired
 	private LobService lobService;
+	@Autowired
+	private FeatureListService featureListService;
 
 	@Autowired
 	@Qualifier("lobValidator")
@@ -47,15 +52,15 @@ public class LobController {
 
 	@RequestMapping(value = "lob", method = RequestMethod.POST)
 	public String submitForm(Model model, @Validated Lob lob, BindingResult result) {
+		FeatureListingDisplay feature = new FeatureListingDisplay();
 		model.addAttribute("lob", lob);
 		String returnVal = "successlob";
-		if ("Workers Compensation".equals(lob.getLobName())) {
-			// initExcelDatas(model);
-			List<LobData> listData = lobService.getLobData(1);
+		if ("Workers Compensation".equals(lob.getLobName())) {	
+			
 			DynDisplayTable displayTable = new DynDisplayTable();
-			List<DynDisplayColumnBean> dynDisplayDetails = displayTable.displayColumnBean(listData);
-			System.out.println("Size of the dynamic details data :" + dynDisplayDetails.size());
-			model.addAttribute("excelDataDetails", dynDisplayDetails);	
+			List<RuleDetailsEntity> listRuleDetails =featureListService.getRulesDetails(1);
+			List<DynDisplayColumnBean> dynDisplayDetails = displayTable.displayRulesDetails(listRuleDetails);
+			model.addAttribute("ruleDetailsData", dynDisplayDetails);		
 			model.addAttribute("lobId",1);
 			return "lobmenu";
 		}

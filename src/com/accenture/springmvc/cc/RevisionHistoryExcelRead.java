@@ -10,6 +10,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 
 import com.accenture.springmvc.entity.RevisionHistoryEntity;
+import com.accenture.springmvc.entity.RuleDetailsEntity;
 import com.accenture.springmvc.service.FeatureListService;
 
 public class RevisionHistoryExcelRead {
@@ -19,7 +20,7 @@ public class RevisionHistoryExcelRead {
 		//read revision History
 		listRevisionHistory = readRevisionHistory(datatypeSheet,lobId);
 		//save Revision History
-		saveRevisionHistory(listRevisionHistory,featureListService);
+		saveRevisionHistory(listRevisionHistory,featureListService);		
 	}
 	
 	private List<RevisionHistoryEntity> readRevisionHistory(Sheet datatypeSheet,int lobId) {
@@ -79,5 +80,5 @@ public class RevisionHistoryExcelRead {
 		for (RevisionHistoryEntity rv : listRevisionHistory) {			
 			featureListService.saveRevisionHistory(rv);
 		}
-	}
+	}	
 }

@@ -8,6 +8,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.accenture.springmvc.entity.RuleDetailsEntity;
 import com.accenture.springmvc.service.FeatureListService;
@@ -20,6 +21,7 @@ public class RuleDetailsExcelRead {
 		listRuleDetails = readRuleDetails(datatypeSheet,lobId);
 		// save Rule Details
 		saveRuleDetails(listRuleDetails,featureListService);
+		
 	}
 
 	private List<RuleDetailsEntity> readRuleDetails(Sheet datatypeSheet,int lobId) {
@@ -75,4 +77,5 @@ public class RuleDetailsExcelRead {
 			featureListService.saveRuleDetails(rd);
 		}
 	}
+	
 }

@@ -14,7 +14,7 @@ import javax.persistence.Table;
 public class RevisionHistoryEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int RevisionHistoryID;
+	private int revisionHistoryId;
 	@Column
 	private int lobId;
 	@Column
@@ -24,24 +24,18 @@ public class RevisionHistoryEntity {
 	@Column
 	private String Description;
 	@Column
-	private String Author;
+	private String author;
 	@Column
-	private String ReviewedBy;
+	private String reviewedBy;
 
-	public int getRevisionHistoryID() {
-		return RevisionHistoryID;
-	}
-
-	public void setRevisionHistoryID(int revisionHistoryID) {
-		RevisionHistoryID = revisionHistoryID;
-	}
+	
 
 	public int getLobId() {
 		return lobId;
 	}
 
 	public void setLobId(int lobId) {
-		lobId = lobId;
+		this.lobId = lobId;
 	}
 
 	public Date getDate() {
@@ -68,20 +62,30 @@ public class RevisionHistoryEntity {
 		Description = description;
 	}
 
+	public int getRevisionHistoryId() {
+		return revisionHistoryId;
+	}
+
+	public void setRevisionHistoryId(int revisionHistoryId) {
+		this.revisionHistoryId = revisionHistoryId;
+	}
+
 	public String getAuthor() {
-		return Author;
+		return author;
 	}
 
 	public void setAuthor(String author) {
-		Author = author;
+		this.author = author;
 	}
 
 	public String getReviewedBy() {
-		return ReviewedBy;
+		return reviewedBy;
 	}
 
 	public void setReviewedBy(String reviewedBy) {
-		ReviewedBy = reviewedBy;
+		this.reviewedBy = reviewedBy;
 	}
+
+	
 
 }

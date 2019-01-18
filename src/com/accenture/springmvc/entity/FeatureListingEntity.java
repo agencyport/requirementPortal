@@ -41,7 +41,7 @@ public class FeatureListingEntity {
 	@Column
 	private String endorse;
 	@Column
-	private String reneww;
+	private String renew;
 	@Column
 	private String cancel;
 	@Column
@@ -134,11 +134,11 @@ public class FeatureListingEntity {
 	public void setEndorse(String endorse) {
 		this.endorse = endorse;
 	}
-	public String getReneww() {
-		return reneww;
+	public String getRenew() {
+		return renew;
 	}
-	public void setReneww(String reneww) {
-		this.reneww = reneww;
+	public void setRenew(String renew) {
+		this.renew = renew;
 	}
 	public String getCancel() {
 		return cancel;
