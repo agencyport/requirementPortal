@@ -20,8 +20,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.accenture.springmvc.cc.DynDisplayTable;
 import com.accenture.springmvc.cc.FeatureListingDisplay;
 import com.accenture.springmvc.entity.DynDisplayColumnBean;
+import com.accenture.springmvc.entity.FeatureListingEntity;
 import com.accenture.springmvc.entity.Lob;
-import com.accenture.springmvc.entity.LobData;
+import com.accenture.springmvc.entity.RevisionHistoryEntity;
 import com.accenture.springmvc.entity.RuleDetailsEntity;
 import com.accenture.springmvc.service.FeatureListService;
 import com.accenture.springmvc.service.LobService;
@@ -56,11 +57,17 @@ public class LobController {
 		model.addAttribute("lob", lob);
 		String returnVal = "successlob";
 		if ("Workers Compensation".equals(lob.getLobName())) {	
-			
+			List<DynDisplayColumnBean> dynDisplayDetails;
 			DynDisplayTable displayTable = new DynDisplayTable();
 			List<RuleDetailsEntity> listRuleDetails =featureListService.getRulesDetails(1);
-			List<DynDisplayColumnBean> dynDisplayDetails = displayTable.displayRulesDetails(listRuleDetails);
-			model.addAttribute("ruleDetailsData", dynDisplayDetails);		
+			 dynDisplayDetails = displayTable.displayRulesDetails(listRuleDetails);
+			model.addAttribute("ruleDetailsData", dynDisplayDetails);	
+			List<RevisionHistoryEntity> listRevisionHistory =featureListService.getRevisionHistory(1);
+			 dynDisplayDetails = displayTable.displayRevisionHistory(listRevisionHistory);
+			model.addAttribute("revisionHistoryData", dynDisplayDetails);	
+			List<FeatureListingEntity> listFeatureListing =featureListService.getFeatureListing(1);
+			 dynDisplayDetails = displayTable.displayFeatureListing(listFeatureListing);
+			model.addAttribute("featureListingData", dynDisplayDetails);	
 			model.addAttribute("lobId",1);
 			return "lobmenu";
 		}
